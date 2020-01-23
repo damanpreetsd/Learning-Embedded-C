@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main()
+{
+	//variable char
+    char ch;
+
+    //pointer char
+    char *pCh;
+
+    /* Initialization of pointer variable with the
+     * address of variable ch
+     */
+    pCh = &ch;
+
+    //Assigned value to the variable ch
+    ch = 'A';
+
+    //accessing address and value of ch using variable ch
+    printf("Value of ch: %c\n",ch);
+    printf("Address of ch: %p\n",&ch);
+
+    //accessing value and address of ch using pointer variable pCh
+    printf("Value of ch: %c\n",*pCh);
+    printf("Address of ch: %p",pCh);
+
+   return 0;
+}
