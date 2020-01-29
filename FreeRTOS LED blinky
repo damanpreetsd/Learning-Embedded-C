@@ -1,0 +1,100 @@
+#include "board.h"
+#include "FreeRTOS.h"
+#include "task.h"
+
+/*****************************************************************************
+ * Private types/enumerations/variables
+ ****************************************************************************/
+
+/*****************************************************************************
+ * Public types/enumerations/variables
+ ****************************************************************************/
+
+/*****************************************************************************
+ * Private functions
+ ****************************************************************************/
+
+/* Sets up system hardware */
+static void prvSetupHardware(void)
+{
+	SystemCoreClockUpdate();
+	Board_Init();
+
+	/* Initial LED0 state is off */
+	Board_LED_Set(0, true);
+	Board_LED_Set(1, true);
+	Board_LED_Set(2, true);
+}
+
+/* LED1 toggle thread */
+static void vLEDTask0(void *pvParameters) {
+	/*bool LedState = false;*/
+
+	while (1) {
+		Board_LED_Set(0, false);
+		vTaskDelay(2000);
+		Board_LED_Set(0, true);
+		vTaskDelay(1000);
+
+	}
+}
+
+static void vLEDTask1(void *pvParameters) {
+
+	while (1) {
+		Board_LED_Set(1, true);
+		vTaskDelay(1000);
+		Board_LED_Set(1, false);
+		vTaskDelay(2000);
+	}
+}
+
+static void vLEDTask2(void *pvParameters) {
+
+		while (1) {
+			Board_LED_Set(2, false);
+			vTaskDelay(1000);
+			Board_LED_Set(2, true);
+			vTaskDelay(1000);
+			Board_LED_Set(2, false);
+			vTaskDelay(1000);
+	}
+}
+
+/*****************************************************************************
+ * Public functions
+ ****************************************************************************/
+
+/**
+ * @brief	main routine for FreeRTOS blinky example
+ * @return	Nothing, function should not exit
+ */
+int main(void)
+{
+	prvSetupHardware();
+
+	/* LED1 toggle thread */
+	xTaskCreate(vLEDTask0, (signed char *) "vTaskLed0",
+			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1UL),
+				(xTaskHandle *) NULL);
+
+	/* LED2 toggle thread */
+	xTaskCreate(vLEDTask1, (signed char *) "vTaskLed1",
+			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1UL),
+				(xTaskHandle *) NULL);
+
+	/* UART output thread, simply counts seconds */
+	xTaskCreate(vLEDTask2, (signed char *) "vTaskLed2",
+			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1UL),
+				(xTaskHandle *) NULL);
+
+	/* Start the scheduler */
+	vTaskStartScheduler();
+
+	/* Should never arrive here */
+	return 1;
+}
+
+/**
+ * @}
+ */
