@@ -28,7 +28,6 @@ static void prvSetupHardware(void)
 
 /* LED1 toggle thread */
 static void vLEDTask0(void *pvParameters) {
-	/*bool LedState = false;*/
 
 	while (1) {
 		Board_LED_Set(0, false);
@@ -80,12 +79,12 @@ int main(void)
 
 	/* LED2 toggle thread */
 	xTaskCreate(vLEDTask1, (signed char *) "vTaskLed1",
-			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1UL),
+			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 3UL),
 				(xTaskHandle *) NULL);
 
 	/* UART output thread, simply counts seconds */
 	xTaskCreate(vLEDTask2, (signed char *) "vTaskLed2",
-			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1UL),
+			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 2UL),
 				(xTaskHandle *) NULL);
 
 	/* Start the scheduler */
