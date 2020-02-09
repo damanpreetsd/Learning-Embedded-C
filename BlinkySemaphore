@@ -3,7 +3,7 @@
 #include "task.h"
 #include "semphr.h"
 
-xSemaphoreHandle	xMutex_led_blinky;
+xSemaphoreHandle	xMutex_Led_Blinky;
 
 int red =0;
 int green =1;
@@ -15,7 +15,7 @@ static void prvSetupHardware(void)
 	SystemCoreClockUpdate();
 	Board_Init();
 
-	/* Initial state for each LED is off */
+	/* Initial state for each LED is on */
 	Board_LED_Set(0, true);
 	Board_LED_Set(1, true);
 	Board_LED_Set(2, true);
@@ -24,14 +24,14 @@ static void prvSetupHardware(void)
 
 static void vLEDBlinky(int num)
 {
-	xSemaphoreTake(xMutex_led_blinky, portMAX_DELAY);
+	xSemaphoreTake(xMutex_Led_Blinky, portMAX_DELAY);
 	{
 		Board_LED_Set(num, true);
 		vTaskDelay(configTICK_RATE_HZ);
 		Board_LED_Set(num, false);
 
 	}
-	xSemaphoreGive(xMutex_led_blinky);
+	xSemaphoreGive(xMutex_Led_Blinky);
 }
 
 static void vLEDTask(void *pvParameters)
