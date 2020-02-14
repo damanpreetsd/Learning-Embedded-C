@@ -65,11 +65,11 @@ int main(void)
 		{
 			/* LED1 toggle thread */
 			xTaskCreate(vLEDTask, (signed char *) "vTaskLed0",
-				configMINIMAL_STACK_SIZE,&red, (tskIDLE_PRIORITY+1UL),
+				configMINIMAL_STACK_SIZE,&red, (tskIDLE_PRIORITY+3UL),
 				(xTaskHandle *) NULL);
 
 			xTaskCreate(vLEDTask, (signed char *) "vTaskLed1",
-					configMINIMAL_STACK_SIZE,&green, (tskIDLE_PRIORITY+3UL),
+					configMINIMAL_STACK_SIZE,&green, (tskIDLE_PRIORITY+1UL),
 					(xTaskHandle *) NULL);
 
 			xTaskCreate(vLEDTask, (signed char *) "vTaskLed2",
