@@ -74,12 +74,12 @@ int main(void)
 
 	/* LED1 toggle thread */
 	xTaskCreate(vLEDBlink0, (signed char *) "vBlinkLed0",
-			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1UL),
+			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 3UL),
 				(xTaskHandle *) NULL);
 
 	/* LED2 toggle thread */
 	xTaskCreate(vLEDBlink1, (signed char *) "vBlinkLed1",
-			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 3UL),
+			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1UL),
 				(xTaskHandle *) NULL);
 
 	/* UART output thread, simply counts seconds */
