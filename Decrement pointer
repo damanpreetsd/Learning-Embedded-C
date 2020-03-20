@@ -4,7 +4,7 @@ const int MAX = 3;  // Global Variable
 int main()
 {
 	printf("\n\n\t\tGitHub - Best place to learn\n\n\n");
-	int var[] = {100, 200, 300};
+	int var[] = {200, 300, 400};
     int i, *ptr;
 
     /* 
@@ -21,6 +21,6 @@ int main()
 		// move to the previous location
         ptr--;
 	}
-	printf("\n\n\t\t\tCoding is Fun !\n\n\n");
+	printf("\n\n\t\t\tCoding is a best skill !\n\n\n");
     return 0;
 }
