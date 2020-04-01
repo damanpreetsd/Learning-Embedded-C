@@ -20,14 +20,14 @@ static void prvSetupHardware(void)
 	SystemCoreClockUpdate();
 	Board_Init();
 
-	/* Initial LED0 state is on */
-	Board_LED_Set(0, true);
-	Board_LED_Set(1, true);
-	Board_LED_Set(2, true);
+	/* Initial LED0 state is off */
+	Board_LED_Set(0, false);
+	Board_LED_Set(1, false);
+	Board_LED_Set(2, false);
 }
 
 /* LED1 toggle thread */
-static void vLEDBlink0(void *pvParameters) {
+static void vLEDBlinlky0(void *pvParameters) {
 
 	while (1) {
 		Board_LED_Set(0, false);
@@ -38,7 +38,7 @@ static void vLEDBlink0(void *pvParameters) {
 	}
 }
 
-static void vLEDBlink1(void *pvParameters) {
+static void vLEDBlinky1(void *pvParameters) {
 
 	while (1) {
 		Board_LED_Set(1, true);
@@ -48,7 +48,7 @@ static void vLEDBlink1(void *pvParameters) {
 	}
 }
 
-static void vLEDBlink2(void *pvParameters) {
+static void vLEDBlinky2(void *pvParameters) {
 
 		while (1) {
 			Board_LED_Set(2, false);
@@ -73,18 +73,18 @@ int main(void)
 	prvSetupHardware();
 
 	/* LED1 toggle thread */
-	xTaskCreate(vLEDBlink0, (signed char *) "vBlinkLed0",
+	xTaskCreate(vLEDBlinky0, (signed char *) "vBlinkyLed0",
 			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1UL),
 				(xTaskHandle *) NULL);
 
 	/* LED2 toggle thread */
-	xTaskCreate(vLEDBlink1, (signed char *) "vBlinkLed1",
-			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 3UL),
+	xTaskCreate(vLEDBlinky1, (signed char *) "vBlinkyLed1",
+			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 2UL),
 				(xTaskHandle *) NULL);
 
 	/* UART output thread, simply counts seconds */
-	xTaskCreate(vLEDBlink2, (signed char *) "vBlinkLed2",
-			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 2UL),
+	xTaskCreate(vLEDBlinky2, (signed char *) "vBlinkyLed2",
+			configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 3UL),
 				(xTaskHandle *) NULL);
 
 	/* Start the scheduler */
